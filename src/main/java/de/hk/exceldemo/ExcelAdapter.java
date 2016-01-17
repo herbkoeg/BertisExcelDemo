@@ -30,7 +30,7 @@ public class ExcelAdapter {
      */
     public void getRelevantRows(XSSFSheet sheet) throws FileNotFoundException, IOException {
 
-        //bla https://github.com/herbkoeg/ExcelDemo.git
+        //blafasl https://github.com/herbkoeg/ExcelDemo.git
         //Iterate through each rows one by one
         Iterator<Row> rowIterator = sheet.iterator();
         while (rowIterator.hasNext()) {

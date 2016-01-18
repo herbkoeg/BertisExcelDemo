@@ -5,11 +5,14 @@
  */
 package de.hk.exceldemo;
 
-import java.io.File;
+import de.hk.exceldemo.business.AuftragHeader;
+import de.hk.exceldemo.exception.FileFormatException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,11 +28,12 @@ public class ExcelAdapter {
     /**
      * Returns the relevant Rows of the Excel-File, e.g. all rows needed to
      * create an Aufrag
-     * @param path
+     *
+     * @param sheet
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
-    public void getRelevantRows(XSSFSheet sheet) throws FileNotFoundException, IOException {
+    public void getRelevantRowsOld(XSSFSheet sheet) throws FileNotFoundException, IOException {
 
         //Iterate through each rows one by one
         Iterator<Row> rowIterator = sheet.iterator();
@@ -53,6 +57,38 @@ public class ExcelAdapter {
             System.out.println("");
         }
 
+    }
+
+    public List<Row> getRelevantRows(XSSFSheet sheet) {
+
+        List<Row> relevantRows = new ArrayList<Row>();
+        int counter = 0;
+        //Iterate through each rows one by one
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            counter++;
+            if (counter > 2) // ignore first Lines
+            {
+                relevantRows.add(row);
+            }
+        }
+        return relevantRows;
+    }
+
+    public AuftragHeader getHeader(XSSFSheet sheet) throws FileFormatException {
+        int counter = 0;
+        
+        Iterator<Row> rowIterator = sheet.iterator();
+        if (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            AuftragHeader auftragHeader = new AuftragHeader(row.getCell(0).getStringCellValue());
+            return auftragHeader;
+        }
+        else
+        {
+            throw new FileFormatException("Ungueltiger Header");
+        }
     }
 
     public XSSFSheet loadXSSFSheet(FileInputStream file, int sheetNr) throws IOException, InvalidFormatException {

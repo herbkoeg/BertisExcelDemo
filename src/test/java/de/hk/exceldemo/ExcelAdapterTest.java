@@ -52,7 +52,7 @@ public class ExcelAdapterTest {
         XSSFSheet sheet = cut.loadXSSFSheet(file, 0);
         assertNotNull(sheet);
         
-        cut.getRelevantRows(sheet);
+        cut.getRelevantRowsOld(sheet);
         
     }
 }

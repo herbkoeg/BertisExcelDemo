@@ -14,7 +14,7 @@ import javax.persistence.Id;
  * @author palmherby
  */
 @Entity
-public class BeitragsaenderungInfo extends Info{
+public class Beitragsaenderung extends Auftrag{
    
     private Long id;
     private String vnr;

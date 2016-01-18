@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hk.exceldemo.business;
-
-import org.apache.poi.xssf.usermodel.XSSFSheet;
+package de.hk.exceldemo.model;
 
 /**
  *
  * @author palmherby
  */
-public interface AuftragMapper {
+public class InfoFile {
     
-    abstract Object createAufrag(XSSFSheet xssfSheet);
 }

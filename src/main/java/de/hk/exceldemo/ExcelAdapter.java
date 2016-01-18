@@ -5,7 +5,6 @@
  */
 package de.hk.exceldemo;
 
-import de.hk.exceldemo.business.AuftragHeader;
 import de.hk.exceldemo.exception.FileFormatException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -65,7 +64,7 @@ public class ExcelAdapter {
     }
 
     List<Row> getRelevantRows(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
-        XSSFSheet sheet = loadXSSFSheet(fileInputStream, sheetNr);
+        XSSFSheet sheet = getXSSFSheet(fileInputStream, sheetNr);
 
         List<Row> relevantRows = new ArrayList<>();
         int counter = 0;
@@ -82,24 +81,40 @@ public class ExcelAdapter {
         return relevantRows;
     }
 
-    AuftragHeader getHeader(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException {
+    List<Row> getHeader(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException {
         return getHeader(fileInputStream, 0);
     }
 
-    AuftragHeader getHeader(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
-        int counter = 0;
-        XSSFSheet sheet = loadXSSFSheet(fileInputStream, sheetNr);
+    /**
+     * Header consists of 2 rows.
+     * First row is the specification of the gevo, second is the colomn
+     * description
+     * @param fileInputStream
+     * @param sheetNr
+     * @return
+     * @throws FileFormatException
+     * @throws IOException
+     * @throws InvalidFormatException 
+     */
+    List<Row> getHeader(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
+        List<Row> header = new ArrayList<>();
+        XSSFSheet sheet = getXSSFSheet(fileInputStream, sheetNr);
         Iterator<Row> rowIterator = sheet.iterator();
         if (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            AuftragHeader auftragHeader = new AuftragHeader(row.getCell(0).getStringCellValue());
-            return auftragHeader;
+            header.add(rowIterator.next());
+            if (rowIterator.hasNext()) {
+                header.add(rowIterator.next());
+            }
+            else {
+                throw new FileFormatException("Ungueltiger Header");
+            }
         } else {
             throw new FileFormatException("Ungueltiger Header");
         }
+        return header;
     }
 
-    XSSFSheet loadXSSFSheet(FileInputStream file, int sheetNr) throws IOException, InvalidFormatException {
+    XSSFSheet getXSSFSheet(FileInputStream file, int sheetNr) throws IOException, InvalidFormatException {
 
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(sheetNr);

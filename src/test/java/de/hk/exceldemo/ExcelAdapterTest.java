@@ -5,7 +5,6 @@
  */
 package de.hk.exceldemo;
 
-import de.hk.exceldemo.business.AuftragHeader;
 import de.hk.exceldemo.exception.FileFormatException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,28 +53,28 @@ public class ExcelAdapterTest {
     @Test
     public void loadXSSFSheetTest() throws IOException, InvalidFormatException {
         FileInputStream file = new FileInputStream(new File(FILE_VALID));
-        XSSFSheet sheet = this.cut.loadXSSFSheet(file, 0);
+        XSSFSheet sheet = this.cut.getXSSFSheet(file, 0);
         assertNotNull(sheet);
     }
 
     @Test(expected = IOException.class)
     public void loadXSSFSheetFailureTest() throws IOException, InvalidFormatException {
         FileInputStream file = new FileInputStream(new File(FILE_NOT_EXISTING));
-        this.cut.loadXSSFSheet(file, 0);
+        this.cut.getXSSFSheet(file, 0);
     }
 
     @Test(expected = POIXMLException.class)
     public void loadXSSFSheetFailureOldFormatTest() throws IOException, InvalidFormatException {
         FileInputStream file = new FileInputStream(new File(FILE_OLD_FORMAT));
-        this.cut.loadXSSFSheet(file, 0);
+        this.cut.getXSSFSheet(file, 0);
     }
 
     @Test
     public void getHeaderTest() throws FileNotFoundException, IOException, InvalidFormatException, FileFormatException {
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
-        AuftragHeader auftragHeader = cut.getHeader(fileInputStream);
+        List<Row> auftragHeader = cut.getHeader(fileInputStream);
         assertNotNull(auftragHeader);
-        assertEquals("Beitragserhöhung",auftragHeader.getGevoTyp());
+        assertEquals("Beitragsaenderung",auftragHeader.get(0).getCell(0).getStringCellValue());
     }
     
     @Test

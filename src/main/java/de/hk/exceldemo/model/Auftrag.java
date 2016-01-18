@@ -9,6 +9,6 @@ package de.hk.exceldemo.model;
  *
  * @author palmherby
  */
-abstract class Info {
+public class Auftrag {
     
 }

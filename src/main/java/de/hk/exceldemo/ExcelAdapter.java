@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -54,12 +55,10 @@ public class ExcelAdapter {
 
     }
 
-    private XSSFSheet loadXSSFSheet(String path, int sheetNr) throws FileNotFoundException, IOException {
-        FileInputStream file = new FileInputStream(new File(path));
+    public XSSFSheet loadXSSFSheet(FileInputStream file, int sheetNr) throws IOException, InvalidFormatException {
 
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(sheetNr);
-        file.close();
         return sheet;
     }
 

@@ -5,7 +5,11 @@
  */
 package de.hk.exceldemo;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,12 +43,16 @@ public class ExcelAdapterTest {
     }
 
     @Test
-    public void firstTest() throws IOException {
+    public void firstTest() throws IOException, InvalidFormatException {
         ExcelAdapter cut = new ExcelAdapter();
         
         String path = "/Users/palmherby/Entwickeln/netBeansProjects/ExcelDemo/beitrag.xlsx";
         
-        cut.getRelevantRows(path);
+        FileInputStream file = new FileInputStream(new File(path));
+        XSSFSheet sheet = cut.loadXSSFSheet(file, 0);
+        assertNotNull(sheet);
+        
+        cut.getRelevantRows(sheet);
         
     }
 }

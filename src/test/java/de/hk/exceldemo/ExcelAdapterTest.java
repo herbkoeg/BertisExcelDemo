@@ -34,7 +34,7 @@ public class ExcelAdapterTest {
     @Test
     public void firstTest() throws IOException, InvalidFormatException {
         ExcelAdapter cut = new ExcelAdapter();
-        String path = "/Users/palmherby/Entwickeln/netBeansProjects/ExcelDemo/beitrag.xlsx";
+        String path = "./src/test/resources/beitrag.xlsx";
         FileInputStream file = new FileInputStream(new File(path));
         XSSFSheet sheet = cut.loadXSSFSheet(file, 0);
         assertNotNull(sheet);

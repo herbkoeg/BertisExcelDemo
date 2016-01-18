@@ -32,7 +32,7 @@ public class ExcelAdapter {
      * @param sheet
      * @throws FileNotFoundException
      * @throws IOException
-     * @deprecated 
+     * @deprecated
      */
     public void getRelevantRowsOld(XSSFSheet sheet) throws FileNotFoundException, IOException {
 
@@ -60,9 +60,14 @@ public class ExcelAdapter {
 
     }
 
-    List<Row> getRelevantRows(XSSFSheet sheet) {
+    List<Row> getRelevantRows(FileInputStream fileInputStream) throws IOException, InvalidFormatException {
+        return getRelevantRows(fileInputStream, 0);
+    }
 
-        List<Row> relevantRows = new ArrayList<Row>();
+    List<Row> getRelevantRows(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
+        XSSFSheet sheet = loadXSSFSheet(fileInputStream, sheetNr);
+
+        List<Row> relevantRows = new ArrayList<>();
         int counter = 0;
         //Iterate through each rows one by one
         Iterator<Row> rowIterator = sheet.iterator();
@@ -77,22 +82,24 @@ public class ExcelAdapter {
         return relevantRows;
     }
 
-    AuftragHeader getHeader(XSSFSheet sheet) throws FileFormatException {
+    AuftragHeader getHeader(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException {
+        return getHeader(fileInputStream, 0);
+    }
+
+    AuftragHeader getHeader(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
         int counter = 0;
-        
+        XSSFSheet sheet = loadXSSFSheet(fileInputStream, sheetNr);
         Iterator<Row> rowIterator = sheet.iterator();
         if (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             AuftragHeader auftragHeader = new AuftragHeader(row.getCell(0).getStringCellValue());
             return auftragHeader;
-        }
-        else
-        {
+        } else {
             throw new FileFormatException("Ungueltiger Header");
         }
     }
 
-    public XSSFSheet loadXSSFSheet(FileInputStream file, int sheetNr) throws IOException, InvalidFormatException {
+    XSSFSheet loadXSSFSheet(FileInputStream file, int sheetNr) throws IOException, InvalidFormatException {
 
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(sheetNr);

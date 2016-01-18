@@ -23,14 +23,13 @@ public class ExcelAdapter {
 
     /**
      * Returns the relevant Rows of the Excel-File, e.g. all rows needed to
-     * create an order
+     * create an Aufrag
      * @param path
      * @throws FileNotFoundException
      * @throws IOException 
      */
     public void getRelevantRows(XSSFSheet sheet) throws FileNotFoundException, IOException {
 
-        //blafasl https://github.com/herbkoeg/ExcelDemo.git
         //Iterate through each rows one by one
         Iterator<Row> rowIterator = sheet.iterator();
         while (rowIterator.hasNext()) {

@@ -26,33 +26,19 @@ public class ExcelAdapterTest {
     public ExcelAdapterTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
+
     }
     
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void firstTest() throws IOException, InvalidFormatException {
         ExcelAdapter cut = new ExcelAdapter();
-        
         String path = "/Users/palmherby/Entwickeln/netBeansProjects/ExcelDemo/beitrag.xlsx";
-        
         FileInputStream file = new FileInputStream(new File(path));
         XSSFSheet sheet = cut.loadXSSFSheet(file, 0);
         assertNotNull(sheet);
         
         cut.getRelevantRowsOld(sheet);
-        
     }
 }

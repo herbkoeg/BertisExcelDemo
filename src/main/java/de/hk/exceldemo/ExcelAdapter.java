@@ -32,6 +32,7 @@ public class ExcelAdapter {
      * @param sheet
      * @throws FileNotFoundException
      * @throws IOException
+     * @deprecated 
      */
     public void getRelevantRowsOld(XSSFSheet sheet) throws FileNotFoundException, IOException {
 
@@ -59,7 +60,7 @@ public class ExcelAdapter {
 
     }
 
-    public List<Row> getRelevantRows(XSSFSheet sheet) {
+    List<Row> getRelevantRows(XSSFSheet sheet) {
 
         List<Row> relevantRows = new ArrayList<Row>();
         int counter = 0;
@@ -76,7 +77,7 @@ public class ExcelAdapter {
         return relevantRows;
     }
 
-    public AuftragHeader getHeader(XSSFSheet sheet) throws FileFormatException {
+    AuftragHeader getHeader(XSSFSheet sheet) throws FileFormatException {
         int counter = 0;
         
         Iterator<Row> rowIterator = sheet.iterator();

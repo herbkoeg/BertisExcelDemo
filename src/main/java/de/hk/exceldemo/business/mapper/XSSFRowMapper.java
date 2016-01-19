@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
     // produce Info Excel-Sheet
     abstract String validateInfoHeaderRow(Row row);
-    abstract Row createInfoHeader();
+    abstract Row createInfoHeaderRow();
     abstract Row createInfoRow(Row row);
     abstract XSSFWorkbook createInfoWorkbook(List<Row> rows);
 

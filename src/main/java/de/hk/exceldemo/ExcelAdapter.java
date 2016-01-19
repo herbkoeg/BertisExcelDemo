@@ -102,32 +102,30 @@ public class ExcelAdapter {
             Row row = rowIt.next();
             XSSFRow newRow = sheet.createRow(row.getRowNum());
             rowCount++;
-//            newRow.setRowStyle(row.getRowStyle());
+            newRow.setRowStyle(row.getRowStyle());
 
             Iterator<Cell> cellIt = row.cellIterator();
             int cellCount = 0;
             while (cellIt.hasNext()) {
                 Cell cell = cellIt.next();
                 cellCount++;
-                XSSFCell newCell = newRow.createCell(cellCount, cell.getCellType());
-              //  newCell.setCellStyle(cell.getCellStyle());
-                
-                if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
-                    newCell.setCellValue(cell.getStringCellValue());
-                }
-                else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-                    newCell.setCellValue(cell.getNumericCellValue());
-                }
+                addCell(newRow, cellCount, cell);
             }
 
         }
 
         return wb;
+    }
 
-        //write this workbook to an Outputstream.
-//        wb.write(fileOut);
-        //      fileOut.flush();
-        //    fileOut.close();
+    void addCell(XSSFRow newRow, int cellCount, Cell cell) {
+        XSSFCell newCell = newRow.createCell(cellCount, cell.getCellType());
+        
+        if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
+            newCell.setCellValue(cell.getStringCellValue());
+        }
+        else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+            newCell.setCellValue(cell.getNumericCellValue());
+        }
     }
 
 }

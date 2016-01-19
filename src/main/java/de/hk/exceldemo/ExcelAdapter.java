@@ -5,6 +5,7 @@
  */
 package de.hk.exceldemo;
 
+import de.hk.exceldemo.business.mapper.XSSFRowMapper;
 import de.hk.exceldemo.exception.FileFormatException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,6 +28,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author palmherby
  */
 public class ExcelAdapter {
+
+    XSSFRowMapper getXSSFRowMapper(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String type = getType(fileInputStream);
+
+        String className = "de.hk.exceldemo.business.mapper." + type + "RowMapper";
+        Class c = Class.forName(className);
+        return (XSSFRowMapper)c.newInstance();
+    }
 
     List<Row> getEntityRows(FileInputStream fileInputStream) throws IOException, InvalidFormatException {
         return ExcelAdapter.this.getEntityRows(fileInputStream, 0);
@@ -54,6 +63,14 @@ public class ExcelAdapter {
         return getHeaderRows(fileInputStream, 0);
     }
 
+    private String getType(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException {
+        List<Row> rows = getHeaderRows(fileInputStream, 0);
+        
+        Iterator<Row> rowIt = rows.iterator();
+        Row row = rowIt.next();
+        return row.cellIterator().next().getStringCellValue();
+    }
+
     /**
      * Header consists of 2 rows. First row is the specification of the gevo,
      * second is the column description
@@ -65,7 +82,7 @@ public class ExcelAdapter {
      * @throws IOException
      * @throws InvalidFormatException
      */
-    List<Row> getHeaderRows(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
+    private List<Row> getHeaderRows(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
         List<Row> header = new ArrayList<>();
         XSSFSheet sheet = getXSSFSheet(fileInputStream, sheetNr);
         Iterator<Row> rowIterator = sheet.iterator();
@@ -111,7 +128,6 @@ public class ExcelAdapter {
                 cellCount++;
                 addCell(newRow, cellCount, cell);
             }
-
         }
 
         return wb;
@@ -119,11 +135,10 @@ public class ExcelAdapter {
 
     void addCell(XSSFRow newRow, int cellCount, Cell cell) {
         XSSFCell newCell = newRow.createCell(cellCount, cell.getCellType());
-        
+
         if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
             newCell.setCellValue(cell.getStringCellValue());
-        }
-        else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+        } else if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
             newCell.setCellValue(cell.getNumericCellValue());
         }
     }

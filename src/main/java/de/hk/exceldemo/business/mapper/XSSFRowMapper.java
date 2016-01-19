@@ -15,7 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author palmherby
  */
-public interface XSSFRowMapper {
+    public interface XSSFRowMapper {
 
     // produce Info Excel-Sheet
     abstract String validateInfoHeaderRow(Row row);

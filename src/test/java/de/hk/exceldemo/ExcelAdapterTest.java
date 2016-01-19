@@ -5,7 +5,10 @@
  */
 package de.hk.exceldemo;
 
+import de.hk.exceldemo.business.mapper.BeitragsaenderungRowMapper;
+import de.hk.exceldemo.business.mapper.XSSFRowMapper;
 import de.hk.exceldemo.exception.FileFormatException;
+import de.hk.exceldemo.model.Beitragsaenderung;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,7 +37,7 @@ import org.junit.BeforeClass;
 public class ExcelAdapterTest {
 
     private ExcelAdapter cut;
-    private final String FILE_VALID = "./src/test/resources/beitrag.xlsx";
+    private final String FILE_BEITRAGSAENDERUNG = "./src/test/resources/beitrag.xlsx";
     private final String FILE_OLD_FORMAT = "./src/test/resources/beitrag97.xls";
     private final String FILE_NOT_EXISTING = "notexisting.xlsx";
     private final String FILE_GENERATE = "./src/test/resources/beitragGenerated.xlsx";
@@ -59,7 +62,7 @@ public class ExcelAdapterTest {
 
     @Test
     public void loadXSSFSheetTest() throws IOException, InvalidFormatException {
-        FileInputStream file = new FileInputStream(new File(FILE_VALID));
+        FileInputStream file = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         XSSFSheet sheet = this.cut.getXSSFSheet(file, 0);
         assertNotNull(sheet);
     }
@@ -78,7 +81,7 @@ public class ExcelAdapterTest {
 
     @Test
     public void getHeaderTest() throws FileNotFoundException, IOException, InvalidFormatException, FileFormatException {
-        FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
+        FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         List<Row> auftragHeader = cut.getHeaderRows(fileInputStream);
         assertNotNull(auftragHeader);
         assertEquals("Beitragsaenderung",auftragHeader.get(0).getCell(0).getStringCellValue());
@@ -86,7 +89,7 @@ public class ExcelAdapterTest {
     
     @Test
     public void getRelevantRows() throws FileNotFoundException, IOException, InvalidFormatException{
-        FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
+        FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
      
         List<Row> rows = cut.getEntityRows(fileInputStream);
         
@@ -96,7 +99,7 @@ public class ExcelAdapterTest {
     @Test
     public void createXSSFWorkbook() throws FileNotFoundException, IOException, InvalidFormatException
     {
-        FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
+        FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         List<Row> rows = cut.getEntityRows(fileInputStream);        
         XSSFWorkbook wb = cut.createXSSFWorkbook(rows);
         try ( //write this workbook to an Outputstream.
@@ -123,5 +126,13 @@ public class ExcelAdapterTest {
         
         Iterator<Cell> celltIt = newRow2.cellIterator();
         assertEquals("jawoi", celltIt.next().getStringCellValue());
+    }
+    
+    @Test
+    public void getXSSFRowMapper() throws Exception{
+        FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
+        XSSFRowMapper mapper = cut.getXSSFRowMapper(fileInputStream);        
+        
+        assertTrue(mapper instanceof BeitragsaenderungRowMapper);
     }
 }

@@ -14,7 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author palmherby
  */
-public class BeitragsaenderungMapper implements XSSFRowMapper{
+public class BeitragsaenderungRowMapper implements XSSFRowMapper{
 
     @Override
     public String validateInfoHeaderRow(Row row) {
@@ -50,4 +50,6 @@ public class BeitragsaenderungMapper implements XSSFRowMapper{
     public Auftrag createAuftrag(Row row) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
 }

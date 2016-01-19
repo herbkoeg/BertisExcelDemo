@@ -7,14 +7,18 @@ package de.hk.exceldemo;
 
 import de.hk.exceldemo.exception.FileFormatException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.examples.CellTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -24,46 +28,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ExcelAdapter {
 
-    /**
-     * Returns the relevant Rows of the Excel-File, e.g. all rows needed to
-     * create an Aufrag
-     *
-     * @param sheet
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @deprecated
-     */
-    public void getRelevantRowsOld(XSSFSheet sheet) throws FileNotFoundException, IOException {
-
-        //Iterate through each rows one by one
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            //For each row, iterate through all the columns
-            Iterator<Cell> cellIterator = row.cellIterator();
-
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                //Check the cell type and format accordingly
-                switch (cell.getCellType()) {
-                    case Cell.CELL_TYPE_NUMERIC:
-                        System.out.print(cell.getNumericCellValue() + "t");
-                        break;
-                    case Cell.CELL_TYPE_STRING:
-                        System.out.print(cell.getStringCellValue() + "t");
-                        break;
-                }
-            }
-            System.out.println("");
-        }
-
+    List<Row> getEntityRows(FileInputStream fileInputStream) throws IOException, InvalidFormatException {
+        return ExcelAdapter.this.getEntityRows(fileInputStream, 0);
     }
 
-    List<Row> getRelevantRows(FileInputStream fileInputStream) throws IOException, InvalidFormatException {
-        return getRelevantRows(fileInputStream, 0);
-    }
-
-    List<Row> getRelevantRows(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
+    List<Row> getEntityRows(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
         XSSFSheet sheet = getXSSFSheet(fileInputStream, sheetNr);
 
         List<Row> relevantRows = new ArrayList<>();
@@ -81,31 +50,30 @@ public class ExcelAdapter {
         return relevantRows;
     }
 
-    List<Row> getHeader(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException {
-        return getHeader(fileInputStream, 0);
+    List<Row> getHeaderRows(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException {
+        return getHeaderRows(fileInputStream, 0);
     }
 
     /**
-     * Header consists of 2 rows.
-     * First row is the specification of the gevo, second is the colomn
-     * description
+     * Header consists of 2 rows. First row is the specification of the gevo,
+     * second is the column description
+     *
      * @param fileInputStream
      * @param sheetNr
      * @return
      * @throws FileFormatException
      * @throws IOException
-     * @throws InvalidFormatException 
+     * @throws InvalidFormatException
      */
-    List<Row> getHeader(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
+    List<Row> getHeaderRows(FileInputStream fileInputStream, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
         List<Row> header = new ArrayList<>();
         XSSFSheet sheet = getXSSFSheet(fileInputStream, sheetNr);
         Iterator<Row> rowIterator = sheet.iterator();
-        if (rowIterator.hasNext()) {
+        if (rowIterator.hasNext()) {  // first row
             header.add(rowIterator.next());
-            if (rowIterator.hasNext()) {
+            if (rowIterator.hasNext()) {  // second row
                 header.add(rowIterator.next());
-            }
-            else {
+            } else {
                 throw new FileFormatException("Ungueltiger Header");
             }
         } else {
@@ -119,6 +87,47 @@ public class ExcelAdapter {
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheetAt(sheetNr);
         return sheet;
+    }
+
+    public static FileOutputStream createXLSXOutputStreamFile(String excelFileName, List<Row> rows) throws IOException {
+
+        String sheetName = "baVormer";
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet(sheetName);
+        Iterator<Row> rowIt = rows.iterator();
+
+        int rowCount = 0;
+        while (rowIt.hasNext()) {
+            Row row = rowIt.next();
+            XSSFRow newRow = sheet.createRow(row.getRowNum());
+            rowCount++;
+            newRow.setRowStyle(row.getRowStyle());
+
+            Iterator<Cell> cellIt = row.cellIterator();
+            int cellCount = 0;
+            while (cellIt.hasNext()) {
+                Cell cell = cellIt.next();
+                cellCount++;
+                XSSFCell newCell = newRow.createCell(cellCount, cell.getCellType());
+                newCell.setCellStyle(cell.getCellStyle());
+                
+                if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
+                    newCell.setCellValue(cell.getStringCellValue());
+                }
+                else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+                    newCell.setCellValue(cell.getNumericCellValue());
+                }
+            }
+
+        }
+
+        return new FileOutputStream(excelFileName);
+
+        //write this workbook to an Outputstream.
+//        wb.write(fileOut);
+        //      fileOut.flush();
+        //    fileOut.close();
     }
 
 }

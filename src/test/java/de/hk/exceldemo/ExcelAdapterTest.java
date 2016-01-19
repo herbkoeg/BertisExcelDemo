@@ -72,7 +72,7 @@ public class ExcelAdapterTest {
     @Test
     public void getHeaderTest() throws FileNotFoundException, IOException, InvalidFormatException, FileFormatException {
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
-        List<Row> auftragHeader = cut.getHeader(fileInputStream);
+        List<Row> auftragHeader = cut.getHeaderRows(fileInputStream);
         assertNotNull(auftragHeader);
         assertEquals("Beitragsaenderung",auftragHeader.get(0).getCell(0).getStringCellValue());
     }
@@ -81,7 +81,7 @@ public class ExcelAdapterTest {
     public void getRelevantRows() throws FileNotFoundException, IOException, InvalidFormatException{
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
      
-        List<Row> rows = cut.getRelevantRows(fileInputStream);
+        List<Row> rows = cut.getEntityRows(fileInputStream);
         
         assertEquals(24, rows.size());
     }

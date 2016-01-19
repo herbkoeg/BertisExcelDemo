@@ -9,12 +9,14 @@ import de.hk.exceldemo.exception.FileFormatException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import org.apache.poi.POIXMLException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,6 +34,8 @@ public class ExcelAdapterTest {
     private final String FILE_VALID = "./src/test/resources/beitrag.xlsx";
     private final String FILE_OLD_FORMAT = "./src/test/resources/beitrag97.xls";
     private final String FILE_NOT_EXISTING = "notexisting.xlsx";
+    private final String FILE_GENERATE = "./src/test/resources/beitragGenerated.xlsx";
+
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -84,5 +88,22 @@ public class ExcelAdapterTest {
         List<Row> rows = cut.getEntityRows(fileInputStream);
         
         assertEquals(24, rows.size());
+    }
+    
+    @Test
+    public void createXSSFWorkbook() throws FileNotFoundException, IOException, InvalidFormatException
+    {
+        FileInputStream fileInputStream = new FileInputStream(new File(FILE_VALID));
+        List<Row> rows = cut.getEntityRows(fileInputStream);
+        
+
+        XSSFWorkbook wb = cut.createXSSFWorkbook(rows);
+        
+        //write this workbook to an Outputstream.
+        FileOutputStream fileOut = new FileOutputStream(FILE_GENERATE);
+        wb.write(fileOut);
+        fileOut.flush();
+        fileOut.close();
+
     }
 }

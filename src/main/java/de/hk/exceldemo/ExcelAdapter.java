@@ -89,7 +89,7 @@ public class ExcelAdapter {
         return sheet;
     }
 
-    public static FileOutputStream createXLSXOutputStreamFile(String excelFileName, List<Row> rows) throws IOException {
+    public XSSFWorkbook createXSSFWorkbook(List<Row> rows) throws IOException {
 
         String sheetName = "baVormer";
 
@@ -102,7 +102,7 @@ public class ExcelAdapter {
             Row row = rowIt.next();
             XSSFRow newRow = sheet.createRow(row.getRowNum());
             rowCount++;
-            newRow.setRowStyle(row.getRowStyle());
+//            newRow.setRowStyle(row.getRowStyle());
 
             Iterator<Cell> cellIt = row.cellIterator();
             int cellCount = 0;
@@ -110,7 +110,7 @@ public class ExcelAdapter {
                 Cell cell = cellIt.next();
                 cellCount++;
                 XSSFCell newCell = newRow.createCell(cellCount, cell.getCellType());
-                newCell.setCellStyle(cell.getCellStyle());
+              //  newCell.setCellStyle(cell.getCellStyle());
                 
                 if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
                     newCell.setCellValue(cell.getStringCellValue());
@@ -122,7 +122,7 @@ public class ExcelAdapter {
 
         }
 
-        return new FileOutputStream(excelFileName);
+        return wb;
 
         //write this workbook to an Outputstream.
 //        wb.write(fileOut);

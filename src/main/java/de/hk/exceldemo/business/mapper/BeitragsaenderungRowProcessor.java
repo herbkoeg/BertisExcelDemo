@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.hk.exceldemo.business.mapper;
 
 import de.hk.exceldemo.exception.FileFormatException;
@@ -15,13 +10,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author palmherby
  */
-public class BeitragsaenderungRowMapper extends AbstractRowMapper{
+public class BeitragsaenderungRowProcessor extends AbstractRowProcessor{
 
     @Override
-    public String validateInfoHeaderRow(Row row) throws FileFormatException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void validateInfoHeaderRow(Row row) throws FileFormatException {
+        
+        validateStringCell(row.getCell(0), "VNR");
+        validateStringCell(row.getCell(1), "Stichtag");
+        
     }
-
+    
     @Override
     public Row createInfoHeaderRow() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

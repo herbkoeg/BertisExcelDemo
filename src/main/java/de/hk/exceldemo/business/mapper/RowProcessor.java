@@ -15,9 +15,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author palmherby
  */
-public interface RowMapper {
+public interface RowProcessor {
     // produce Info Excel-Sheet
-    abstract String validateInfoHeaderRow(Row row) throws FileFormatException;
+    abstract void validateInfoHeaderRow(Row row) throws FileFormatException;
     abstract Row createInfoHeaderRow();
     abstract Row createInfoRow(Row row);
     abstract XSSFWorkbook createInfoWorkbook(List<Row> rows);

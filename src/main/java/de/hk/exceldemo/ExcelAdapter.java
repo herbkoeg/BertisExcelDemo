@@ -5,15 +5,13 @@
  */
 package de.hk.exceldemo;
 
-import de.hk.exceldemo.business.mapper.XSSFRowMapper;
+import de.hk.exceldemo.business.mapper.RowMapper;
 import de.hk.exceldemo.exception.FileFormatException;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.poi.hssf.usermodel.examples.CellTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -29,12 +27,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ExcelAdapter {
 
-    XSSFRowMapper getXSSFRowMapper(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    RowMapper getXSSFRowMapper(FileInputStream fileInputStream) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         String type = getType(fileInputStream);
 
         String className = "de.hk.exceldemo.business.mapper." + type + "RowMapper";
         Class c = Class.forName(className);
-        return (XSSFRowMapper)c.newInstance();
+        return  (RowMapper) c.newInstance();
     }
 
     List<Row> getEntityRows(FileInputStream fileInputStream) throws IOException, InvalidFormatException {

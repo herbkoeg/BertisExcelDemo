@@ -6,9 +6,8 @@
 package de.hk.exceldemo;
 
 import de.hk.exceldemo.business.mapper.BeitragsaenderungRowMapper;
-import de.hk.exceldemo.business.mapper.XSSFRowMapper;
+import de.hk.exceldemo.business.mapper.RowMapper;
 import de.hk.exceldemo.exception.FileFormatException;
-import de.hk.exceldemo.model.Beitragsaenderung;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
+
 
 /**
  *
@@ -131,7 +131,7 @@ public class ExcelAdapterTest {
     @Test
     public void getXSSFRowMapper() throws Exception{
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
-        XSSFRowMapper mapper = cut.getXSSFRowMapper(fileInputStream);        
+        RowMapper mapper = cut.getXSSFRowMapper(fileInputStream);        
         
         assertTrue(mapper instanceof BeitragsaenderungRowMapper);
     }

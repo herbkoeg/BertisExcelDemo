@@ -5,6 +5,7 @@
  */
 package de.hk.exceldemo.business.mapper;
 
+import de.hk.exceldemo.exception.FileFormatException;
 import de.hk.exceldemo.model.Auftrag;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,10 +15,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author palmherby
  */
-public class BeitragsaenderungRowMapper implements XSSFRowMapper{
+public class BeitragsaenderungRowMapper extends AbstractRowMapper{
 
     @Override
-    public String validateInfoHeaderRow(Row row) {
+    public String validateInfoHeaderRow(Row row) throws FileFormatException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -37,12 +38,12 @@ public class BeitragsaenderungRowMapper implements XSSFRowMapper{
     }
 
     @Override
-    public String validateAuftragHeaderRow(Row row) {
+    public String validateAuftragHeaderRow(Row row) throws FileFormatException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String validateAuftragRow(Row row) {
+    public String validateAuftragRow(Row row) throws FileFormatException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -50,6 +51,5 @@ public class BeitragsaenderungRowMapper implements XSSFRowMapper{
     public Auftrag createAuftrag(Row row) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
 }

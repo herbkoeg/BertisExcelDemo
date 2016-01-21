@@ -1,8 +1,10 @@
 package de.hk.exceldemo.business.processor;
 
 import de.hk.exceldemo.exception.FileFormatException;
-import de.hk.exceldemo.model.Auftrag;
+import de.hk.exceldemo.model.GeVo;
+import de.hk.exceldemo.model.Beitragsaenderung;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -13,7 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class BeitragsaenderungRowProcessor extends AbstractRowProcessor{
 
     @Override
-    public void validateInfoHeaderRow(Row row) throws FileFormatException {
+    public void validateHeadingRow(Row row) throws FileFormatException {
         
         validateStringCell(row.getCell(0), "VNR");
         validateStringCell(row.getCell(1), "Stichtag");
@@ -26,8 +28,10 @@ public class BeitragsaenderungRowProcessor extends AbstractRowProcessor{
     }
 
     @Override
-    public Row createInfoRow(Row row) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Row fillInfoRow(Row row) {
+
+        row.getCell(1).setCellValue("Jawoi");
+        return row;
     }
 
     @Override
@@ -46,8 +50,10 @@ public class BeitragsaenderungRowProcessor extends AbstractRowProcessor{
     }
 
     @Override
-    public Auftrag createAuftrag(Row row) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public GeVo createGeVo(Row row) {
+        Beitragsaenderung auftrag = new Beitragsaenderung();
+        auftrag.setVnr(String.valueOf(row.getCell(0).getNumericCellValue()));
+        return auftrag;
     }
 
 }

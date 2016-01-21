@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import de.hk.exceldemo.business.processor.RowProcessor;
 
+
 /**
  *
  * @author palmherby
@@ -38,7 +39,7 @@ public class SheetService {
         return rowIt.next().getCell(0).getStringCellValue();
     }
 
-    public Row getDescriptionRow(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException {
+    public Row getHeadingRow(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException {
         List<Row> rows = getHeaderRows(sheet, 1);
         if(rows.size() < 2) throw new FileFormatException("Keine Ueberschrift gefunden");
         Iterator<Row> rowIt = rows.iterator();
@@ -62,7 +63,7 @@ public class SheetService {
         return header;
     }
 
-    public RowProcessor getXSSFRowMapper(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public RowProcessor getXSSFRowProcessor(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         String type = getType(sheet);
 
         String className = "de.hk.exceldemo.business.processor." + type + "RowProcessor";

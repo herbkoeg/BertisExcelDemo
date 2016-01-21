@@ -47,7 +47,7 @@ public class SheetServiceTest extends BaseTest{
     public void testGetXSSFRowMapper() throws Exception {
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
-        assertTrue(cut.getXSSFRowMapper(sheet) instanceof BeitragsaenderungRowProcessor);    
+        assertTrue(cut.getXSSFRowProcessor(sheet) instanceof BeitragsaenderungRowProcessor);    
     }
     
     @Test

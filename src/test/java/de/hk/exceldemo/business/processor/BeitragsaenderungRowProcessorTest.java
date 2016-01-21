@@ -41,7 +41,7 @@ public class BeitragsaenderungRowProcessorTest extends BaseTest {
     public void testValidateInfoHeaderRow() throws Exception {
          FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
-        cut.validateInfoHeaderRow(sheetService.getDescriptionRow(sheet));
+        cut.validateHeadingRow(sheetService.getHeadingRow(sheet));
     }
 
     @Test

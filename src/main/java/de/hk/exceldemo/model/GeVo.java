@@ -9,6 +9,6 @@ package de.hk.exceldemo.model;
  *
  * @author palmherby
  */
-public class InfoFile {
+public class GeVo {
     
 }

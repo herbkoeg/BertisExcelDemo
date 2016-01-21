@@ -57,7 +57,7 @@ public class ExcelAdapter {
         }
     }
 
-    XSSFSheet getXSSFSheet(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
+    public XSSFSheet getXSSFSheet(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
 
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
         XSSFSheet sheet = workbook.getSheetAt(sheetNr);

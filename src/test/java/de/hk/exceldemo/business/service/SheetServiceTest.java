@@ -6,7 +6,7 @@
 package de.hk.exceldemo.business.service;
 
 import de.hk.exceldemo.BaseTest;
-import de.hk.exceldemo.business.mapper.BeitragsaenderungRowProcessor;
+import de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,6 +48,13 @@ public class SheetServiceTest extends BaseTest{
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
         assertTrue(cut.getXSSFRowMapper(sheet) instanceof BeitragsaenderungRowProcessor);    
+    }
+    
+    @Test
+    public void testType() throws Exception {
+        FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
+        XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
+        assertEquals("Beitragsaenderung", cut.getType(sheet));
     }
     
 }

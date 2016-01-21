@@ -1,4 +1,4 @@
-package de.hk.exceldemo.business.mapper;
+package de.hk.exceldemo.business.processor;
 
 import de.hk.exceldemo.exception.FileFormatException;
 import de.hk.exceldemo.model.Auftrag;

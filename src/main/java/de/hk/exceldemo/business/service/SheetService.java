@@ -9,6 +9,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import de.hk.exceldemo.business.processor.RowProcessor;
+import org.apache.poi.ss.usermodel.Sheet;
 
 
 /**
@@ -17,7 +18,7 @@ import de.hk.exceldemo.business.processor.RowProcessor;
  */
 public class SheetService {
 
-    List<Row> getDataRows(XSSFSheet sheet) throws IOException, InvalidFormatException {
+    List<Row> getDataRows(Sheet sheet) throws IOException, InvalidFormatException {
         List<Row> relevantRows = new ArrayList<>();
         int counter = 0;
         //Iterate through each rows one by one
@@ -33,13 +34,13 @@ public class SheetService {
         return relevantRows;
     }
 
-    public String getType(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException {
+    public String getType(Sheet sheet) throws FileFormatException, IOException, InvalidFormatException {
         List<Row> rows = getHeaderRows(sheet, 0);
         Iterator<Row> rowIt = rows.iterator();
         return rowIt.next().getCell(0).getStringCellValue();
     }
 
-    public Row getHeadingRow(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException {
+    public Row getHeadingRow(Sheet sheet) throws FileFormatException, IOException, InvalidFormatException {
         List<Row> rows = getHeaderRows(sheet, 1);
         if(rows.size() < 2) throw new FileFormatException("Keine Ueberschrift gefunden");
         Iterator<Row> rowIt = rows.iterator();
@@ -47,7 +48,7 @@ public class SheetService {
         return rowIt.next();
     }
 
-    private List<Row> getHeaderRows(XSSFSheet sheet, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
+    private List<Row> getHeaderRows(Sheet sheet, int sheetNr) throws FileFormatException, IOException, InvalidFormatException {
         List<Row> header = new ArrayList<>();
         Iterator<Row> rowIterator = sheet.iterator();
         if (rowIterator.hasNext()) {  // first row
@@ -63,7 +64,7 @@ public class SheetService {
         return header;
     }
 
-    public RowProcessor getXSSFRowProcessor(XSSFSheet sheet) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public RowProcessor getRowProcessor(Sheet sheet) throws FileFormatException, IOException, InvalidFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         String type = getType(sheet);
 
         String className = "de.hk.exceldemo.business.processor." + type + "RowProcessor";

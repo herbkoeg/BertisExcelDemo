@@ -10,6 +10,7 @@ import de.hk.exceldemo.business.service.ExcelAdapter;
 import de.hk.exceldemo.business.service.SheetService;
 import java.io.File;
 import java.io.FileInputStream;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -39,8 +40,7 @@ public class BeitragsaenderungRowProcessorTest extends BaseTest {
 
     @Test
     public void testValidateInfoHeaderRow() throws Exception {
-         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
-        XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
+        Sheet sheet = getBeitragsaenderungSheet();
         cut.validateHeadingRow(sheetService.getHeadingRow(sheet));
     }
 

@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -39,21 +40,21 @@ public class SheetServiceTest extends BaseTest{
     @Test
     public void testGetDataRows() throws FileNotFoundException, IOException, InvalidFormatException {
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
-        XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
+        Sheet sheet = excelAdapter.getSheet(fileInputStream, 0);
         assertEquals(24,cut.getDataRows(sheet).size());
     }
     
     @Test
     public void testGetXSSFRowMapper() throws Exception {
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
-        XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
-        assertTrue(cut.getXSSFRowProcessor(sheet) instanceof BeitragsaenderungRowProcessor);    
+        Sheet sheet = excelAdapter.getSheet(fileInputStream, 0);
+        assertTrue(cut.getRowProcessor(sheet) instanceof BeitragsaenderungRowProcessor);    
     }
     
     @Test
     public void testType() throws Exception {
         FileInputStream fileInputStream = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
-        XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
+        Sheet sheet = excelAdapter.getSheet(fileInputStream, 0);
         assertEquals("Beitragsaenderung", cut.getType(sheet));
     }
     

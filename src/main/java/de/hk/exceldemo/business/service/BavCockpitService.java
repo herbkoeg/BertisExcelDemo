@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -24,12 +25,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author palmherby
  */
 public class BavCockpitService {
-    private ExcelAdapter excelAdapter = new ExcelAdapter();
-    private SheetService sheetService = new SheetService();
+    private final ExcelAdapter excelAdapter = new ExcelAdapter();
+    private final SheetService sheetService = new SheetService();
     
     public List<GeVo> createGevoList(FileInputStream fileInputStream) throws IOException, InvalidFormatException, FileFormatException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        XSSFSheet sheet = excelAdapter.getXSSFSheet(fileInputStream, 0);
-        RowProcessor xssfRowProcessor = sheetService.getXSSFRowProcessor(sheet);
+        Sheet sheet = excelAdapter.getSheet(fileInputStream, 0);
+        RowProcessor xssfRowProcessor = sheetService.getRowProcessor(sheet);
         xssfRowProcessor.validateHeadingRow(sheetService.getHeadingRow(sheet));
                 
         Iterator<Row> itDataRows = sheetService.getDataRows(sheet).iterator();
@@ -37,7 +38,6 @@ public class BavCockpitService {
         
         while (itDataRows.hasNext()) {
             Row row = itDataRows.next();
-           // xssfRowProcessor.validateAuftragRow(row);
             geVoList.add(xssfRowProcessor.createGeVo(row));
         }
 

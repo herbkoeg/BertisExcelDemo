@@ -6,11 +6,11 @@
 package de.hk.exceldemo.business.service;
 
 import de.hk.exceldemo.BaseTest;
+import de.hk.exceldemo.model.BeitragsaenderungGeVo;
 import de.hk.exceldemo.model.GeVo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
-import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,9 +37,13 @@ public class BavCockpitServiceTest extends BaseTest {
     public void testCreateGevoList() throws Exception {
         FileInputStream file = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         
-        List<GeVo> createGevoList = cut.createGevoList(file);
+        List<GeVo> gevoList = cut.createGevoList(file);
         
-        assertEquals(24,createGevoList.size());
+        assertEquals(24,gevoList.size());
+        
+        BeitragsaenderungGeVo gevo = (BeitragsaenderungGeVo) gevoList.get(0);
+        
+        assertEquals(70123456l,gevo.getVnr().longValue());
     }
 
     @Test

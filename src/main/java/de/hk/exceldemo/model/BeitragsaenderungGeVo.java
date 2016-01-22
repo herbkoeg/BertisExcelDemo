@@ -14,10 +14,10 @@ import javax.persistence.Id;
  * @author palmherby
  */
 @Entity
-public class Beitragsaenderung extends GeVo{
+public class BeitragsaenderungGeVo extends GeVo{
    
     private Long id;
-    private String vnr;
+    private Long vnr;
     private Double beitragAktuell;
     private Double beitragNeu;
     private Date stichtag;
@@ -31,11 +31,11 @@ public class Beitragsaenderung extends GeVo{
         this.id = id;
     }
 
-    public String getVnr() {
+    public Long getVnr() {
         return vnr;
     }
 
-    public void setVnr(String vnr) {
+    public void setVnr(Long vnr) {
         this.vnr = vnr;
     }
 

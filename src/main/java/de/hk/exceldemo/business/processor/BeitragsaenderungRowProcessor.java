@@ -2,9 +2,8 @@ package de.hk.exceldemo.business.processor;
 
 import de.hk.exceldemo.exception.FileFormatException;
 import de.hk.exceldemo.model.GeVo;
-import de.hk.exceldemo.model.Beitragsaenderung;
+import de.hk.exceldemo.model.BeitragsaenderungGeVo;
 import java.util.List;
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -51,8 +50,8 @@ public class BeitragsaenderungRowProcessor extends AbstractRowProcessor{
 
     @Override
     public GeVo createGeVo(Row row) {
-        Beitragsaenderung auftrag = new Beitragsaenderung();
-        auftrag.setVnr(String.valueOf(row.getCell(0).getNumericCellValue()));
+        BeitragsaenderungGeVo auftrag = new BeitragsaenderungGeVo();
+        auftrag.setVnr((long)row.getCell(0).getNumericCellValue());
         return auftrag;
     }
 

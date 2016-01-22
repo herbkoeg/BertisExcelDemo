@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 
@@ -47,8 +48,8 @@ public class ExcelAdapter {
         return wb;
     }
 
-    void addCell(XSSFRow newRow, int cellCount, Cell cell) {
-        XSSFCell newCell = newRow.createCell(cellCount, cell.getCellType());
+    void addCell(Row newRow, int cellCount, Cell cell) {
+        Cell newCell = newRow.createCell(cellCount, cell.getCellType());
 
         if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
             newCell.setCellValue(cell.getStringCellValue());
@@ -57,11 +58,10 @@ public class ExcelAdapter {
         }
     }
 
-    public XSSFSheet getXSSFSheet(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
+    public Sheet getSheet(FileInputStream fileInputStream, int sheetNr) throws IOException, InvalidFormatException {
 
         XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-        XSSFSheet sheet = workbook.getSheetAt(sheetNr);
-        return sheet;
+        return workbook.getSheetAt(sheetNr);
     }
 
 }

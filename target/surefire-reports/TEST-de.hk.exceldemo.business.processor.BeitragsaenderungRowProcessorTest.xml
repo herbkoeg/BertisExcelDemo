@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" time="1.453" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" time="2.017" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib"/>
@@ -32,7 +32,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="10.11.2"/>
+    <property name="os.version" value="10.11.3"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="user.home" value="/Users/palmherby"/>
     <property name="user.timezone" value="Europe/Berlin"/>
@@ -62,10 +62,10 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testValidateAuftragRow" time="0.014"/>
-  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testCreateInfoHeaderRow" time="0.001"/>
-  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testValidateInfoHeaderRow" time="1.226"/>
-  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testCreateAuftrag" time="0.001"/>
+  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testValidateAuftragRow" time="0.016"/>
+  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testCreateInfoHeaderRow" time="0.008"/>
+  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testValidateInfoHeaderRow" time="1.696"/>
+  <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testCreateAuftrag" time="0"/>
   <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testCreateInfoWorkbook" time="0"/>
   <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testValidateAuftragHeaderRow" time="0"/>
   <testcase classname="de.hk.exceldemo.business.processor.BeitragsaenderungRowProcessorTest" name="testCreateInfoRow" time="0"/>

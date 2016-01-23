@@ -29,7 +29,7 @@ public class BeitragsaenderungRowProcessor extends AbstractRowProcessor{
     @Override
     public Row fillInfoRow(Row row) {
 
-        row.getCell(1).setCellValue("Jawoi");
+        row.getCell(3).setCellValue("Jawoi");
         return row;
     }
 

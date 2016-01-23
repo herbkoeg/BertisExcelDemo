@@ -34,7 +34,7 @@ public class BavCockpitServiceTest extends BaseTest {
     }
 
     @Test
-    public void testCreateGevoList() throws Exception {
+    public void testCreateBeitragsaenderungGevoList() throws Exception {
         FileInputStream file = new FileInputStream(new File(FILE_BEITRAGSAENDERUNG));
         
         List<GeVo> gevoList = cut.createGevoList(file);

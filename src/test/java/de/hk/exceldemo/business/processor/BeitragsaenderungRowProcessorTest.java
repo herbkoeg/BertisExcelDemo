@@ -1,21 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.hk.exceldemo.business.processor;
 
 import de.hk.exceldemo.BaseTest;
 import de.hk.exceldemo.business.service.ExcelAdapter;
 import de.hk.exceldemo.business.service.SheetService;
-import java.io.File;
-import java.io.FileInputStream;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

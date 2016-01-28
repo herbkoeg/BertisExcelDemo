@@ -36,6 +36,7 @@ public class BeitragsaenderungRowProcessorTest extends BaseTest {
 
     @Test
     public void testCreateInfoHeaderRow() {
+        // do something
     }
 
     @Test
